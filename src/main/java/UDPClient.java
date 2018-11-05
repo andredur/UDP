@@ -4,17 +4,18 @@ import java.util.*;
 public class UDPClient {
     public static void main(String[] args) throws IOException {
 
-        /*if (args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Usage: java QuoteClient <hostname>");
             return;
-        }*/
+        }
+        String ip = args[0];
 
         // get a datagram socket
         DatagramSocket socket = new DatagramSocket();
 
         // send request
         byte[] buf = new byte[256];
-        InetAddress address = InetAddress.getByName("127.0.0.1");//args[0]);
+        InetAddress address = InetAddress.getByName(ip);//args[0]);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4445);
         socket.send(packet);
 
