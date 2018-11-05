@@ -28,11 +28,19 @@ public class UDPClient {
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         while(!received.equalsIgnoreCase("EOF"))
         {
+            packet = new DatagramPacket(buf, buf.length, address, 4445);
+            socket.send(packet);
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
+
             received = new String(packet.getData(), 0, packet.getLength());
             byte[] byteArray = received.getBytes();
-            bos.write(byteArray);
+            if(!received.equalsIgnoreCase("EOF"))
+            {
+                bos.write(byteArray);
+                bos.write('\n');
+            }
+
         }
         bos.flush();
         bos.close();
